@@ -87,6 +87,15 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    TrackJS.install({
+      token: "ea9656c1555e45e3b423702bef733c7f",
+      application: "cse110-lab9"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -102,6 +111,7 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    
     errorBtns[0].addEventListener("click", () =>{
       console.log("logButton clicked!")
     })
@@ -117,6 +127,107 @@
     errorBtns[3].addEventListener("click", () => {
       console.warn("Warning!")
     });
+
+    var x = 3;
+    var y = 2;
+    var sum_should_be = 5;
+    errorBtns[4].addEventListener("click", () => {
+      console.assert((x+y) == 6, {x, y, sum})
+    });
+
+    errorBtns[5].addEventListener("click", () => {
+      console.clear()
+    });
+
+    errorBtns[6].addEventListener("click", () => {
+      console.dir(document.body)
+    });
+
+    errorBtns[7].addEventListener("click", () => {
+      console.dirxml(document.body)
+    });
+
+    errorBtns[8].addEventListener("click", () => {
+      console.group("Console group button")
+      console.log("Message inside a group");
+    }); 
+
+    errorBtns[9].addEventListener("click", () => {
+      console.groupEnd("Console group button")
+    }); 
+
+    var table = [
+      {
+        x: 14,
+        y: 3,
+        z: 4,
+      },
+      {
+        x: 3,
+        y: 3,
+        z: 3,
+      },
+      {
+        x: 42,
+        y: 56,
+        z: 19,
+      }
+    ];
+    errorBtns[10].addEventListener("click", () => {
+      console.table(table)
+    }); 
+
+    errorBtns[11].addEventListener("click", () => {
+      console.time("Timer Button")
+    });
+
+    errorBtns[12].addEventListener("click", () => {
+      console.timeEnd("Timer Button")
+    });
+
+    errorBtns[13].addEventListener("click", () => {
+      const one = () => { two(); };
+      const two = () => { three(); };
+      const three = () => { console.trace(); };
+      one();
+    });
+
+    //trigger globle error
+    errorBtns[14].addEventListener('click', function( ){
+      class ValidationError extends Error {
+        constructor(message) {
+          super(message); // (1)
+          this.name = "ValidationError"; // (2)
+        }
+      }
+
+      function func() {
+        let json = '{ "age": 30 }'; // incomplete data
+
+        try {
+          user = JSON.parse(json);
+          console.log("try");
+          throw new ValidationError("Whoops!");
+        } catch (err) {
+          alert("JSON Error: " + err);
+          console.log("catch the error");
+        } finally {
+          console.log( 'finally' );
+        }
+      }
+
+      alert( func() ); // first works alert from finally, and then this one
+
+      function badCode()
+      {
+        alert('Good code running when suddenly...');
+        abooM('bad code!'); /* BAD CODE ON PURPOSE */ 
+      }
+      alert(badCode());
+    });
+    TrackJS.track('Testing TrackJS!');
+    TrackJS.track('second Testing TrackJS!');
+
   </script>
 </body>
 
